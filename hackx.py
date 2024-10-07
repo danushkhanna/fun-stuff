@@ -155,10 +155,6 @@
 # st.markdown("- Houston,I'm In: Iterating through combinations of usernames and passwords in a bruteforce approach to attempt login authentication of input URL")
 # st.markdown("### *Results*")
 # st.markdown("Our solution provides a robust and reliable method for delivering the mentioned features.A lot of scope for future work is possible,due to the intensive constraints of the HACKX Hackathon and our steady increase of expertise in the field. We aim to pursue this idea even after the event,forming an industry-scalable solution even more well-rounded than our current prototype!Please feel free to contact any of our team members if you want to contribute.")
-# # st.markdown("### *AUTHORS*")
-# # st.markdown("- RITABRATA CHAKRABORTY: TEAM LEAD")
-# # st.markdown("- DANUSH S. KHANNA")
-# # st.markdown("- SARASWAT BASU")
 
 
 # -*- coding: utf-8 -*-
@@ -280,55 +276,121 @@ def discover_subdomains(domain):
             continue
     return found_subdomains
 
-# Main processing logic
+# Original code starts here
+# Takes in user input
 input_url = st.text_area("Are you sure your 'bank' sent that link?")
-if input_url:
+if input_url != "":
+    # Extracts features from the URL and converts it into a dataframe
     features_url = ExtractFeatures().url_to_features(url=input_url)
-    features_dataframe = pd.DataFrame.from_dict([features_url]).fillna(-1).astype(int)
-
-    # Fuzz directories
-    if check_404(input_url):
-        st.write("URL not found, brute-forcing directories...")
-        possible_urls = brute_force_url(input_url)
-        st.write("Possible valid URLs:", possible_urls)
-
-    # Virtual host fuzzing
-    domain = input_url.split("/")[2] if "http" in input_url else input_url
-    st.write(f"Checking for Virtual Hosts on {domain}...")
-    found_vhosts = fuzz_virtual_hosts(domain)
-    st.write(f"Found VHosts: {found_vhosts}")
-
-    # API endpoint fuzzing
-    st.write("Fuzzing API Endpoints...")
-    api_endpoints = test_api_endpoints(input_url)
-    st.write(f"Found API Endpoints: {api_endpoints}")
-
-    # Fuzz parameters
-    st.write("Fuzzing parameters for vulnerabilities...")
-    vulnerable_urls = fuzz_parameters(input_url)
-    st.write(f"Potential vulnerabilities found: {vulnerable_urls}")
-
-    # Subdomain enumeration
-    st.write("Enumerating subdomains...")
-    subdomains = discover_subdomains(domain)
-    st.write(f"Found subdomains: {subdomains}")
-
-    # Phishing model prediction
+    features_dataframe = pd.DataFrame.from_dict([features_url])
+    features_dataframe = features_dataframe.fillna(-1)
+    features_dataframe = features_dataframe.astype(int)
+    st.write("Snooping around...")
     st.cache_data.clear()
     prediction_str = ""
-    try:
-        phishing_url_detector = get_model()
-        prediction = phishing_url_detector.predict(features_dataframe)
-        prediction_str = 'This website might be malicious!' if prediction == int(True) else 'Website is safe to proceed!'
-        st.write(prediction_str)
-    except Exception as e:
-        st.error(f"Error during prediction: {str(e)}")
 
-# Display key objectives and results
+    # Function to check if a URL returns a 404 error
+    def check_404(url):
+        try:
+            response = requests.head(url)  # Use HEAD request for faster checking
+            return response.status_code == 404
+        except requests.RequestException:
+            return False
+
+    # Function to brute force valid URLs
+    def brute_force_url(base_url):
+        # This is a simple wordlist for the sake of demonstration.
+        # In real scenarios, you might read from a .txt file.
+        wordlist = ['about', 'contact', 'login', 'signup', 'user', 'admin']
+        found_urls = []
+        for word in wordlist:
+            # Construct new URL to check
+            new_url = base_url + "/" + word
+            if not check_404(new_url):
+                found_urls.append(new_url)
+        return found_urls
+
+    if input_url != "":
+        # Initialize a variable to store the final URL
+        final_url = input_url
+        # Check if the input URL ends with "404/" and remove it
+        if input_url.endswith("404/"):
+            final_url = input_url.rsplit("404/", 1)[0]
+            st.write(f"{input_url} - Removed '404/': {final_url}")
+        try:
+            response = requests.get(final_url)  # Send a GET request to the URL
+            if response.status_code == 200:
+                st.write(f"{final_url} Status: 200 (OK) - The website is live and running")
+            else:
+                st.write(f"{final_url} Status: {response.status_code} - The website may have issues")
+
+            if check_404(final_url):
+                st.write(f"{final_url} Status: 404 (Not Found) - Initiating Brute Force")
+
+                # Try to brute force the correct URL by modifying the final_url
+                possible_urls = brute_force_url(final_url)
+                if possible_urls:
+                    final_url = possible_urls[0]  # Use the first valid URL found
+                    st.write(f"Brute-forced URL: {final_url}")
+                else:
+                    st.write("No valid URLs found based on the wordlist")
+        except requests.RequestException as e:
+            st.write(f"{final_url} NA FAILED TO CONNECT {str(e)}")
+        except Exception as e:
+            print(e)
+            st.error("Not sure what went wrong. We'll get back to you shortly.")
+
+        # Extract and predict using model
+        features_url = ExtractFeatures().url_to_features(url=final_url)
+        features_dataframe = pd.DataFrame.from_dict([features_url])
+        features_dataframe = features_dataframe.fillna(-1)
+        features_dataframe = features_dataframe.astype(int)
+        st.cache_data.clear()
+        prediction_str = ""
+        try:
+            phishing_url_detector = get_model()
+            prediction = phishing_url_detector.predict(features_dataframe)
+            if prediction == int(True):
+                prediction_str = 'This website might be malicious!'
+            elif prediction == int(False):
+                prediction_str = 'Website is safe to proceed!'
+            else:
+                prediction_str = ''
+            st.write(prediction_str)
+            st.write(features_dataframe)
+        except Exception as e:
+            print(e)
+            st.error("Not sure what went wrong. We'll get back to you shortly!")
+else:
+    st.write("")
+
+# Username and password brute-force
+usernames = ['user1', 'user2', 'admin']
+passwords = ['password1', 'password2', '123456']
+login_url = 'https://example.com/login'  # Replace with the actual URL
+
+# Session object to maintain the session cookies
+session = requests.Session()
+
+# Loop through the username and password pairs
+for username in usernames:
+    for password in passwords:
+        # Prepare the login data
+        login_data = {
+            'username': username,
+            'password': password
+        }
+
+        response = session.post(login_url, data=login_data)
+        if 'Login Successful' in response.text:
+            print(f"Successful login - Username: {username}, Password: {password}")
+            break
+
+# Close the session
+session.close()
+
+# Summary of the solution
+st.markdown("Our chosen problem statement focused on Web Safety through URL fuzzing, status check, and brute-forcing exceptions and authentications. Please try the interactive input above and let us know your feedback.")
 st.markdown("### *Key Objectives*")
 st.markdown("- URL-Based Feature Extraction and Fuzzing: Machine Learning-Based Approaches for determining the authenticity of input URL.")
-st.markdown("- Live URL Detection: Obtains site status in the frontend through HTTP GET requests.")
-st.markdown("- Checkmate 404s: Brute-forcing URL modifications to resolve 404 errors.")
-st.markdown("- Houston, I'm In: Brute-forcing login authentications.")
-st.markdown("### *Results*")
-st.markdown("Our solution enhances security testing by fuzzing various components of web applications, including directories, VHosts, API endpoints, and parameters. We aim to develop this prototype further for industry use.")
+st.markdown("- Live URL Detection: Utilizes
