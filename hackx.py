@@ -175,14 +175,14 @@ import dns.resolver
 from urllib.parse import urljoin
 
 # Load images
-# image2 = Image.open('muj logo.png')
-image = Image.open('webguard.jpg')
+image2 = Image.open('webguard.jpg')
+image = Image.open('sih.jpg')
 
 # Streamlit UI for logos
-# col1, col2, col3 = st.columns([0.001, 8, 3])
-# with col2:
-#     st.image(image2, width=200)
-# with col3:
+col1, col2, col3 = st.columns([0.001, 8, 3])
+with col2:
+    st.image(image2, width=200)
+with col3:
     st.image(image, width=200)
 
 st.markdown(
