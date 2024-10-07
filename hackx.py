@@ -183,7 +183,7 @@ image = Image.open('webguard.jpg')
 # with col2:
 #     st.image(image2, width=200)
 # with col3:
-#     st.image(image, width=200)
+    st.image(image, width=200)
 
 st.markdown(
     "<div style='display: flex; align-items: center; margin-bottom: -35px;'>"
