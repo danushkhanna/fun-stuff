@@ -390,12 +390,13 @@ for username in usernames:
 session.close()
 
 # Summary of the solution
+# Summary of the solution
 st.markdown("Our chosen problem statement focused on Web Safety through URL fuzzing, status check, and brute-forcing exceptions and authentications. Please try the interactive input above and let us know your feedback.")
 st.markdown("### *Key Objectives*")
-st.markdown("- URL-Based Feature Extraction and Fuzzing: Machine Learning-Based Approaches for determining the authenticity of input URL.")
-st.markdown("- Live URL Detection: Utilizes HTTPS GET command, calling the input URL as an argument and obtaining site status in the console log, which is then displayed in the frontend as a corresponding message.")
-st.markdown("- Checkmate 404s: Brute-forcing URL additions/removals to resolve 404 error using predefined appending/prepending vocabulary.")
-st.markdown("- Houston, I'm In: Iterating through combinations of usernames and passwords in a brute-force approach to attempt login authentication of input URL.")
+st.markdown("- **URL-Based Feature Extraction and Fuzzing**: Machine Learning-Based Approaches for determining the authenticity of an input URL.")
+st.markdown("- **Live URL Detection**: Uses HTTPS GET command to call the input URL as an argument, obtaining the site status and displaying the result in the frontend.")
+st.markdown("- **404 Error Handling**: Brute-forcing URL modifications to resolve 404 errors using predefined vocabulary for appending/prepending.")
+st.markdown("- **Login Authentication Testing**: Attempts login authentication using brute-force methods, iterating through different username and password combinations.")
 
 # Display Results Section
 st.markdown("### *Results*")
