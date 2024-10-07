@@ -175,7 +175,7 @@ import dns.resolver
 from urllib.parse import urljoin
 
 # Load images
-image2 = Image.open('muj logo.png')
+# image2 = Image.open('muj logo.png')
 image = Image.open('webguard.jpg')
 
 # Streamlit UI for logos
