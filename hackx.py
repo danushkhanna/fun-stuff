@@ -179,11 +179,11 @@ from urllib.parse import urljoin
 image = Image.open('webguard.jpg')
 
 # Streamlit UI for logos
-col1, col2, col3 = st.columns([0.001, 8, 3])
-with col2:
-    st.image(image2, width=200)
-with col3:
-    st.image(image, width=200)
+# col1, col2, col3 = st.columns([0.001, 8, 3])
+# with col2:
+#     st.image(image2, width=200)
+# with col3:
+#     st.image(image, width=200)
 
 st.markdown(
     "<div style='display: flex; align-items: center; margin-bottom: -35px;'>"
