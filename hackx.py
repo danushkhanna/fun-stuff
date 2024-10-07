@@ -176,7 +176,7 @@ from urllib.parse import urljoin
 
 # Load images
 image2 = Image.open('webguard.jpg')
-image = Image.open('sih.jpg')
+image = Image.open('sihlogo.jpg')
 
 # Streamlit UI for logos
 col1, col2, col3 = st.columns([0.001, 8, 3])
