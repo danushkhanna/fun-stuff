@@ -175,19 +175,19 @@ import dns.resolver
 from urllib.parse import urljoin
 
 # Load images
-image2 = Image.open('muj logo.png')
-image = Image.open('hackxlogowhite.png')
+image2 = Image.open('webguard.jpg')
+image = Image.open('sihlogo.jpg')
 
 # Streamlit UI for logos
 col1, col2, col3 = st.columns([0.001, 8, 3])
 with col2:
-    st.image(image2, width=200)
+    st.image(image2, width=150)
 with col3:
-    st.image(image, width=200)
+    st.image(image, width=150)
 
 st.markdown(
     "<div style='display: flex; align-items: center; margin-bottom: -35px;'>"
-    "<h1 style='color:#F862FC; margin-center: 10px;'>WebGuard:</h1>"
+    "<h1 style='color:#0062ff; margin-center: 10px;'>WebGuard:</h1>"
     "</div>"
     "<h1 style='color:black; margin-center: 10px;'>A Comprehensive Fuzzer for Web Application Security</h1>",
     unsafe_allow_html=True
@@ -278,7 +278,7 @@ def discover_subdomains(domain):
 
 # Original code starts here
 # Takes in user input
-input_url = st.text_area("Are you sure your 'bank' sent that link?")
+input_url = st.text_area("Please paste your URL below for security analysis:")
 if input_url != "":
     # Extracts features from the URL and converts it into a dataframe
     features_url = ExtractFeatures().url_to_features(url=input_url)
@@ -390,16 +390,17 @@ for username in usernames:
 session.close()
 
 # Summary of the solution
+# Summary of the solution
 st.markdown("Our chosen problem statement focused on Web Safety through URL fuzzing, status check, and brute-forcing exceptions and authentications. Please try the interactive input above and let us know your feedback.")
 st.markdown("### *Key Objectives*")
-st.markdown("- URL-Based Feature Extraction and Fuzzing: Machine Learning-Based Approaches for determining the authenticity of input URL.")
-st.markdown("- Live URL Detection: Utilizes HTTPS GET command, calling the input URL as an argument and obtaining site status in the console log, which is then displayed in the frontend as a corresponding message.")
-st.markdown("- Checkmate 404s: Brute-forcing URL additions/removals to resolve 404 error using predefined appending/prepending vocabulary.")
-st.markdown("- Houston, I'm In: Iterating through combinations of usernames and passwords in a brute-force approach to attempt login authentication of input URL.")
+st.markdown("- **URL-Based Feature Extraction and Fuzzing**: Machine Learning-Based Approaches for determining the authenticity of an input URL.")
+st.markdown("- **Live URL Detection**: Uses HTTPS GET command to call the input URL as an argument, obtaining the site status and displaying the result in the frontend.")
+st.markdown("- **404 Error Handling**: Brute-forcing URL modifications to resolve 404 errors using predefined vocabulary for appending/prepending.")
+st.markdown("- **Login Authentication Testing**: Attempts login authentication using brute-force methods, iterating through different username and password combinations.")
 
 # Display Results Section
 st.markdown("### *Results*")
-st.markdown("Our solution provides a robust and reliable method for delivering the mentioned features. Although it was developed under time constraints for the HACKX Hackathon, we believe that with more time and resources, this prototype can evolve into an industry-scalable solution. Feel free to contact any of our team members if you'd like to contribute!")
+st.markdown("Our solution provides a robust and reliable method for delivering the mentioned features. Although it was developed under time constraints for the Smart India, we believe that with more time and resources, this prototype can evolve into an industry-scalable solution. Feel free to contact any of our team members if you'd like to contribute!")
 
 # Closing Remarks
 st.markdown("### *Future Enhancements*")
