@@ -278,7 +278,7 @@ def discover_subdomains(domain):
 
 # Original code starts here
 # Takes in user input
-input_url = st.text_area("Are you sure your 'bank' sent that link?")
+input_url = st.text_area("Please paste your URL below for security analysis:")
 if input_url != "":
     # Extracts features from the URL and converts it into a dataframe
     features_url = ExtractFeatures().url_to_features(url=input_url)
