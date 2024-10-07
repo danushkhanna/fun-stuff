@@ -187,7 +187,7 @@ with col3:
 
 st.markdown(
     "<div style='display: flex; align-items: center; margin-bottom: -35px;'>"
-    "<h1 style='color:#F862FC; margin-center: 10px;'>WebGuard:</h1>"
+    "<h1 style='color:#0062ff; margin-center: 10px;'>WebGuard:</h1>"
     "</div>"
     "<h1 style='color:black; margin-center: 10px;'>A Comprehensive Fuzzer for Web Application Security</h1>",
     unsafe_allow_html=True
