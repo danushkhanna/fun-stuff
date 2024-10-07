@@ -399,7 +399,7 @@ st.markdown("- Houston, I'm In: Iterating through combinations of usernames and 
 
 # Display Results Section
 st.markdown("### *Results*")
-st.markdown("Our solution provides a robust and reliable method for delivering the mentioned features. Although it was developed under time constraints for the Smart India Hackathon, we believe that with more time and resources, this prototype can evolve into an industry-scalable solution. Feel free to contact any of our team members if you'd like to contribute!")
+st.markdown("Our solution provides a robust and reliable method for delivering the mentioned features. Although it was developed under time constraints for the Smart India, we believe that with more time and resources, this prototype can evolve into an industry-scalable solution. Feel free to contact any of our team members if you'd like to contribute!")
 
 # Closing Remarks
 st.markdown("### *Future Enhancements*")
